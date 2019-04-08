@@ -47,9 +47,9 @@ class BHTBrPredictor(
   val commit_s2_taken = RegEnable(commit_s1_taken, commit_s1_en)
   val commit_s2_en = RegNext(commit_s1_en)
 
-  // calculate updated counter value
+  // calculate updated counter value (nexted muxes appear to be for overflow)
   val commit_s2_update = Mux(commit_s2_taken,
-    Mux(commit_s2_count === "b11".U, commit_s2_count, commit_s2_count + 1.U),
+    Mux(commit_s2_count === "b11".U, commit_s2_count, commit_s2_count + 1.U), 
     Mux(commit_s2_count === "b00".U, commit_s2_count, commit_s2_count - 1.U))
 
   // write back to table
